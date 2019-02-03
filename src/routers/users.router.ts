@@ -15,6 +15,7 @@ usersRouter.get('', async (req, res) => {
         const users = await UserDao.findAll();
         res.json(users);
     } catch(err){
+        console.log(err);
         res.sendStatus(500);
     }
 
