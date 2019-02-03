@@ -30,3 +30,8 @@ app.use('/users', usersRouter);
 app.use('/reimbursements', reimbursementRouter);
 
 app.use('/login', loginRouter);
+
+//do something in default path
+//app.use('')
+
+app.listen(3000);

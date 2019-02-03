@@ -5,7 +5,6 @@ export const reimbursementRouter = express.Router();
 //TODO
 //add new reimbursements
 reimbursementRouter.post('', (req, res) => {
-    //verify role is finance-manager or admin
     //parse data into reimbursement object
     //maybe use a util function
     //assert id is 0
