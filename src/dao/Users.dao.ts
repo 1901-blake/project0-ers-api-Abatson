@@ -10,20 +10,24 @@ export async function findAll(): Promise<Users[]> {
         'SELECT * FROM project0.users'
       );
       //wtf? test pls
-      return Promise.all(result.rows.map(async (sqlUser) => {
-        return await buildUsers(sqlUser);
-      }));
+      if(result){
+        return Promise.all(result.rows.map(async (sqlUser) => {
+          return await buildUsers(sqlUser);
+        }));
+      }else{
+        return undefined;
+      }
     } finally {
       client.release(); // release connection
     }
   }
   
-  export async function findById(id: number): Promise<Users> {
+  export async function findById(userid: number): Promise<Users> {
     const client = await ConnectionPool.connect();
     try {
       const result = await client.query(
         'SELECT * FROM project0.users WHERE userid = $1',
-        [id]
+        [userid]
       );
       const sqlUser = result.rows[0]; // there should only be 1 record
       if (sqlUser) {
@@ -62,6 +66,25 @@ export async function findAll(): Promise<Users[]> {
           [userToUpdate.username, userToUpdate.password, userToUpdate.firstName, userToUpdate.lastName, userToUpdate.email, userToUpdate.role.roleId, userToUpdate.userId]
         )
         return req.body.userId;
+    } finally {
+      client.release(); // release connection
+    }
+  }
+
+
+  export async function findByUsername(username: string): Promise<Users> {
+    const client = await ConnectionPool.connect();
+    try {
+      const result = await client.query(
+        'SELECT * FROM project0.users WHERE username = $1',
+        [username]
+      );
+      const sqlUser = result.rows[0]; // there should only be 1 record
+      if (sqlUser) {
+        return await buildUsers(sqlUser);
+      } else {
+        return undefined;
+      }
     } finally {
       client.release(); // release connection
     }

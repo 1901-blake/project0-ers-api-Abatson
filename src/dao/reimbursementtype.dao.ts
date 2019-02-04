@@ -12,7 +12,7 @@ export async function getReimbursementType (typeid:number): Promise<Reimbursemen
         if(sqlReimbursementType){
             return {
                 typeId: sqlReimbursementType.typeid,
-                type: sqlReimbursementType.type
+                type: sqlReimbursementType.typename
             }
         }else{
             return undefined;

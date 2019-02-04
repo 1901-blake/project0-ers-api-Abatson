@@ -2,9 +2,8 @@ import * as ReimbursementStatusDao from "../dao/ReimbursementStatus.dao";
 import * as ReimbursementTypeDao from "../dao/ReimbursementType.dao";
 import { Reimbursement } from "../models/Reimbursements";
 
-
+//needs to be tested
 export async function buildReimbursement(reimbursementJson): Promise<Reimbursement>{
-    console.log(reimbursementJson)
     return {
         reimbursementId: reimbursementJson.reimbursementid,
         author: reimbursementJson.author,

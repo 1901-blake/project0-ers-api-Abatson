@@ -1,11 +1,12 @@
 import express from 'express'
 import * as UserDao from "../dao/Users.dao"
+import { managerCheckMiddleware, userMatchingCheckMiddleware, adminCheckMiddleware, loggedIn } from '../middleware/auth.middleware';
 
 export const usersRouter = express.Router();
 
 //TODO
 //Get all users
-usersRouter.get('', async (req, res) => {
+usersRouter.get('', [loggedIn, managerCheckMiddleware, async (req, res) => {
     //verify role finance manager or admin
     //call userdao getall()
     //return list
@@ -19,18 +20,18 @@ usersRouter.get('', async (req, res) => {
         res.sendStatus(500);
     }
 
-});
+}]);
 
 //TODO
 //Get user by id
-usersRouter.get('/:id', async (req, res) => {
+usersRouter.get('/:userId',[loggedIn, userMatchingCheckMiddleware, async (req, res) => {
     //verify role is finance manager or admin
     //verify id is current user id if role isnt sufficient
     //call userdao get by id
     //return user object
     //return status code
 
-    const idParam = +req.params.id;
+    const idParam = +req.params.userId;
     try{
         const user = await UserDao.findById(idParam);
         if(user){
@@ -43,11 +44,11 @@ usersRouter.get('/:id', async (req, res) => {
         res.sendStatus(500);
     }
 
-});
+}]);
 
 //TODO
 //update a user
-usersRouter.patch('', async (req, res) => {
+usersRouter.patch('',[loggedIn, adminCheckMiddleware, async (req, res) => {
     //verify role admin
     //userid must be in body
     //parse data into a user object
@@ -67,7 +68,7 @@ usersRouter.patch('', async (req, res) => {
         res.sendStatus(500)
     }
 
-});
+}]);
 
 
 
