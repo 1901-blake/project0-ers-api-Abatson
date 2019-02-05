@@ -1,6 +1,6 @@
 import express from 'express'
 import * as ReimbursementsDao from '../dao/Reimbursements.dao'
-import { managerCheckMiddleware, loggedIn } from '../middleware/auth.middleware';
+import { managerCheckMiddleware, loggedIn, userMatchingCheckMiddleware } from '../middleware/auth.middleware';
 
 export const reimbursementRouter = express.Router();
 
@@ -57,7 +57,7 @@ reimbursementRouter.get('/status/:statusId',[loggedIn, managerCheckMiddleware, a
 
 //TODO
 //get reimbursements by user
-reimbursementRouter.get('/author/userId/:userId',[loggedIn, managerCheckMiddleware, async (req, res) => {
+reimbursementRouter.get('/author/userId/:userId',[loggedIn, userMatchingCheckMiddleware, async (req, res) => {
     //verify finance manager or admin
     //call reimbursement dao get userid
     //return all reimbursements

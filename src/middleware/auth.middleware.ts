@@ -13,7 +13,7 @@ export function loggedIn(req, res, next) {
 //Assert user is a finance manager or admin
 export function userMatchingCheckMiddleware(req, res, next) {
     if(req.session.user){
-        if(req.session.user.role.role === 'Admin' || req.session.user.role.role === 'Finance-Manager' || req.session.user.userId === +req.params.userId){
+        if(req.session.user.role.role === 'Director' || req.session.user.role.role === 'Analyst' || req.session.user.userId === +req.params.userId){
             next();
         }else {
             res.sendStatus(401);
@@ -25,7 +25,7 @@ export function userMatchingCheckMiddleware(req, res, next) {
 
 export function managerCheckMiddleware(req, res, next) {
     if(req.session.user){
-        if(req.session.user.role.role === 'Admin' || req.session.user.role.role === 'Finance-Manager'){
+        if(req.session.user.role.role === 'Director' || req.session.user.role.role === 'Analyst'){
             next();
         }else {
             res.sendStatus(401);
@@ -41,7 +41,7 @@ export function managerCheckMiddleware(req, res, next) {
 export function adminCheckMiddleware(req, res, next) {
 
     if(req.session.user){
-        if(req.session.user.role.role === 'Admin'){
+        if(req.session.user.role.role === 'Director'){
             next();
         }else {
             res.sendStatus(401);
