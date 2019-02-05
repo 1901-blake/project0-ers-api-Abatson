@@ -48,7 +48,7 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
 
   export async function submit(req) {
     const client = await ConnectionPool.connect();
-    const author = req.body.author; //get userid from session
+    const author = req.session.user.userId; //get userid from session
     const amount = req.body.amount;
     const description = req.body.description;
     const statusid = req.body.status.statusId;
@@ -81,7 +81,7 @@ export async function findByStatusId(statusid: number): Promise<Reimbursement[]>
 export async function update(req){
     const client = await ConnectionPool.connect();
     const dateresolved = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    const resolver = req.body.resolver;
+    const resolver = req.session.user.userId;
     const statusid = req.body.status.statusId;
     const typeid = req.body.type.typeId;
     const reimbursementid = req.body.reimbursementId;
