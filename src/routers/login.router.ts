@@ -9,7 +9,9 @@ loginRouter.post('', async (req,res) => {
 
     //verify with user dao
     //attach to session
+    
     const user = await UserDao.findByUsername(req.body.username);
+    
     if(typeof user === 'undefined'){
         res.status(401);
         res.send('No such Username')

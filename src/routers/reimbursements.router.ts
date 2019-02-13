@@ -6,16 +6,13 @@ export const reimbursementRouter = express.Router();
 
 //TODO
 //add new reimbursements
-reimbursementRouter.post('',[loggedIn, async (req, res) => {
+reimbursementRouter.post('', [loggedIn, async (req, res) => {
     //parse data into reimbursement object
     //maybe use a util function
     //assert id is 0
     //call reimbursementdao create
     //return status code
     
-    if(typeof req.session.user === 'undefined'){
-        res.sendStatus(401);
-    } else {
         try {
             let result = await ReimbursementsDao.submit(req);
             if(!result){
@@ -27,7 +24,7 @@ reimbursementRouter.post('',[loggedIn, async (req, res) => {
             console.log(err);
             res.sendStatus(500)
         }
-    }   
+       
 }]);
 
 //TODO
